@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -15,7 +15,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sherryyuan.tictactoe.ui.theme.TicTacToeTheme
@@ -38,8 +41,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Square(selection: String?) {
     Button(
+        modifier = Modifier.fillMaxWidth().height(128.dp),
         onClick = {},
         border = BorderStroke(1.dp, Black),
+        shape = RectangleShape
     ) {
         Text(text = selection.orEmpty())
     }
