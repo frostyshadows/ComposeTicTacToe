@@ -12,8 +12,8 @@ data class GameViewState(
         updatedSquares[index] = turn.label
 
         val updatedTurn = when (turn) {
-            Turn.X_PLAYER -> Turn.Y_PLAYER
-            Turn.Y_PLAYER -> Turn.X_PLAYER
+            Turn.X_PLAYER -> Turn.O_PLAYER
+            Turn.O_PLAYER -> Turn.X_PLAYER
         }
 
         val winner = calculateWinner(updatedSquares)
@@ -56,5 +56,5 @@ data class GameViewState(
 
 enum class Turn(val label: String) {
     X_PLAYER("X"),
-    Y_PLAYER("Y")
+    O_PLAYER("O")
 }
