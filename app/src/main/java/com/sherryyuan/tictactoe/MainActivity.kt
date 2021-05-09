@@ -1,7 +1,6 @@
 package com.sherryyuan.tictactoe
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -19,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sherryyuan.tictactoe.ui.theme.TicTacToeTheme
@@ -40,14 +38,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Square(selection: String, onClick: () -> Unit) {
+fun Square(selection: String, isBoardEnabled: Boolean, onClick: () -> Unit) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .height(128.dp),
         border = BorderStroke(1.dp, Black),
         shape = RectangleShape,
-        enabled = selection.isBlank(),
+        enabled = isBoardEnabled && selection.isBlank(),
         onClick = onClick,
     ) {
         Text(
@@ -57,14 +55,26 @@ fun Square(selection: String, onClick: () -> Unit) {
     }
 }
 
+@Composable
+fun PlayAgain(onClick: () -> Unit) {
+    Button(
+        onClick = onClick
+    ) {
+        Text(
+            text = "Play again",
+            color = Black,
+        )
+    }
+}
+
 @ExperimentalFoundationApi
 @Composable
-fun Board(squares: List<String>, onClick: (Int) -> Unit) {
+fun Board(squares: List<String>, isBoardEnabled: Boolean, onClick: (Int) -> Unit) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(3)
     ) {
         items(squares.size) { index ->
-            Square(squares[index]) { onClick(index) }
+            Square(squares[index], isBoardEnabled) { onClick(index) }
         }
     }
 }
@@ -74,15 +84,26 @@ fun Board(squares: List<String>, onClick: (Int) -> Unit) {
 fun Game() {
     var state by remember { mutableStateOf(GameViewState()) }
 
-    fun handleClick(index: Int) {
-        state = state.updateState(index)
+    fun onSquareSelected(index: Int) {
+        state = state.selectSquare(index)
     }
+
+    fun onPlayAgainClicked() {
+        state = GameViewState()
+    }
+
     Column {
         Text(text = state.info, color = Black)
         Board(
             squares = state.squares,
-            onClick = ::handleClick,
+            isBoardEnabled = !state.isFinished,
+            onClick = ::onSquareSelected,
         )
+        if (state.isFinished) {
+            PlayAgain(
+                onClick = ::onPlayAgainClicked
+            )
+        }
     }
 }
 
