@@ -53,8 +53,8 @@ fun Game() {
     }
 
     Column(
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(16.dp).fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
     ) {
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
