@@ -6,7 +6,6 @@ data class GameViewState(
     val isFinished: Boolean = false,
     val squares: List<String> = List(9) { "" },
 ) {
-
     fun selectSquare(index: Int): GameViewState {
         val updatedSquares = squares.toMutableList()
         updatedSquares[index] = turn.label
@@ -20,7 +19,11 @@ data class GameViewState(
 
         val updatedInfo = if (winner == null) {
             "Next player: ${updatedTurn.label}"
-        } else {
+        }
+        else if(winner=="none"){
+            "Draw"
+        }
+        else {
             "Winner: $winner"
         }
         return GameViewState(
@@ -49,6 +52,17 @@ data class GameViewState(
             ) {
                 return squares[lines[0]]
             }
+        }
+        if ((squares[0] == "X" || squares[0] == "O") &&
+            (squares[1] == "X" || squares[1] == "O") &&
+            (squares[2] == "X" || squares[2] == "O") &&
+            (squares[3] == "X" || squares[3] == "O") &&
+            (squares[4] == "X" || squares[4] == "O") &&
+            (squares[5] == "X" || squares[5] == "O") &&
+            (squares[6] == "X" || squares[6] == "O") &&
+            (squares[7] == "X" || squares[7] == "O") &&
+            (squares[8] == "X" || squares[8] == "O")) {
+            return "none"
         }
         return null
     }

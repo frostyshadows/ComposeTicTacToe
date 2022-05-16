@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-        primary = Color.Black,
+        primary = Color.White,
         primaryVariant = Purple700,
         secondary = Teal200
 )
@@ -31,7 +31,7 @@ private val LightColorPalette = lightColors(
 @Composable
 fun TicTacToeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        LightColorPalette
     } else {
         LightColorPalette
     }
